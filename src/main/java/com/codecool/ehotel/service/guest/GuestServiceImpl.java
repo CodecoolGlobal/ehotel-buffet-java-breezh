@@ -37,7 +37,7 @@ public class GuestServiceImpl implements GuestService {
 
 
     @Override
-    public Set<Guest> getGuestsForDay(List<Guest> guests, LocalDate date) {
+    public Set<Guest> getGuestsForDay(Set<Guest> guests, LocalDate date) {
         Set<Guest> guestsForDay = new HashSet<>();
         for (Guest guest : guests) {
             if (guest.checkIn().compareTo(date) * guest.checkOut().compareTo(date) > 0) {
