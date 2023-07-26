@@ -13,8 +13,10 @@ import static org.junit.jupiter.api.Assertions.*;
 class GuestServiceImplTest {
     @Test
     void generateGuest() {
+        for (int i = 0; i < 100; i++) {
         GuestService guestService = new GuestServiceImpl();
-        Guest guest = guestService.generateRandomGuest(LocalDate.parse("2023-12-01"), LocalDate.parse("2023-12-04"));
+        Guest guest = guestService.generateRandomGuest(LocalDate.parse("2023-12-01"), LocalDate.parse("2023-12-05"));
         System.out.println(guest.toString());
+        }
     }
 }
