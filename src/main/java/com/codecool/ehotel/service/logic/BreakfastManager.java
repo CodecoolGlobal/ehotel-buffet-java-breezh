@@ -46,28 +46,47 @@ public class BreakfastManager {
         List<Meal> meals = new ArrayList<>();
         Buffet buffet = new Buffet(meals);
 
+        LocalDateTime initialTime = LocalDateTime.parse("2023-01-15T06:00:00");
 
         //first cycle
-        buffetService.refill((new Meal(MealType.SCRAMBLED_EGGS, LocalDateTime.parse("2023-01-15T06:00:00"))), 5, buffet);
-        buffetService.refill((new Meal(MealType.SUNNY_SIDE_UP, LocalDateTime.parse("2023-01-15T06:00:00"))), 5, buffet);
-        buffetService.refill((new Meal(MealType.FRIED_SAUSAGE, LocalDateTime.parse("2023-01-15T06:00:00"))), 5, buffet);
-        buffetService.refill((new Meal(MealType.FRIED_BACON, LocalDateTime.parse("2023-01-15T06:00:00"))), 5, buffet);
-        buffetService.refill((new Meal(MealType.PANCAKE, LocalDateTime.parse("2023-01-15T06:00:00"))), 5, buffet);
-        buffetService.refill((new Meal(MealType.CROISSANT, LocalDateTime.parse("2023-01-15T06:00:00"))), 5, buffet);
-        buffetService.refill((new Meal(MealType.MASHED_POTATO, LocalDateTime.parse("2023-01-15T06:00:00"))), 5, buffet);
-        buffetService.refill((new Meal(MealType.MUFFIN, LocalDateTime.parse("2023-01-15T06:00:00"))), 5, buffet);
-        buffetService.refill((new Meal(MealType.BUN, LocalDateTime.parse("2023-01-15T06:00:00"))), 5, buffet);
-        buffetService.refill((new Meal(MealType.CEREAL, LocalDateTime.parse("2023-01-15T06:00:00"))), 5, buffet);
-        buffetService.refill((new Meal(MealType.MILK, LocalDateTime.parse("2023-01-15T06:00:00"))), 5, buffet);
 
-        for (Guest guest : guestCycles.get(0)) {
-            MealType favoredMeal = guest.guestType().getMealPreferences().get(random.nextInt(guest.guestType().getMealPreferences().size()));
-            if (!buffetService.consumeFreshest(buffet, favoredMeal)) {
-                unsatisfiedGuest++;
+
+        for (int i = 0; i < 8; i++) {
+
+
+            buffetService.refill((new Meal(MealType.SCRAMBLED_EGGS, initialTime)), 5, buffet);
+            buffetService.refill((new Meal(MealType.SUNNY_SIDE_UP, initialTime)), 5, buffet);
+            buffetService.refill((new Meal(MealType.FRIED_SAUSAGE, initialTime)), 5, buffet);
+            buffetService.refill((new Meal(MealType.FRIED_BACON, initialTime)), 5, buffet);
+            buffetService.refill((new Meal(MealType.PANCAKE, initialTime)), 5, buffet);
+            buffetService.refill((new Meal(MealType.CROISSANT, initialTime)), 5, buffet);
+            buffetService.refill((new Meal(MealType.MASHED_POTATO, initialTime)), 5, buffet);
+            buffetService.refill((new Meal(MealType.MUFFIN, initialTime)), 5, buffet);
+            buffetService.refill((new Meal(MealType.BUN, initialTime)), 5, buffet);
+            buffetService.refill((new Meal(MealType.CEREAL, initialTime)), 5, buffet);
+            buffetService.refill((new Meal(MealType.MILK, initialTime)), 5, buffet);
+
+            for (Guest guest : guestCycles.get(0)) {
+                MealType favoredMeal = guest.guestType().getMealPreferences().get(random.nextInt(guest.guestType().getMealPreferences().size()));
+                if (!buffetService.consumeFreshest(buffet, favoredMeal)) {
+                    unsatisfiedGuest++;
+                }
             }
+
+            if (i == 7) {
+                wasteCost += buffetService.collectWaste(buffet, initialTime.plusMinutes(30), true);
+            } else {
+                wasteCost += buffetService.collectWaste(buffet, initialTime.plusMinutes(30), false);
+            }
+
+            initialTime = initialTime.plusMinutes(30);
+            System.out.println("cycle end");
+            System.out.println(wasteCost);
+            System.out.println(unsatisfiedGuest);
         }
-
-        wasteCost += buffetService.collectWaste(buffet, LocalDateTime.parse("2023-01-15T06:30:00"), false);
-
+        System.out.println("----");
+        System.out.println(wasteCost);
+        System.out.println(unsatisfiedGuest);
+        System.out.println("breakfast end");
     }
 }
