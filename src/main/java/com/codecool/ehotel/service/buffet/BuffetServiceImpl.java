@@ -6,6 +6,7 @@ import com.codecool.ehotel.model.MealDurability;
 import com.codecool.ehotel.model.MealType;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class BuffetServiceImpl implements BuffetService {
@@ -35,26 +36,24 @@ public class BuffetServiceImpl implements BuffetService {
     }
 
     @Override
-    public int collectWaste(Buffet buffet, LocalDate date) {
+    public int collectWaste(Buffet buffet, LocalDateTime date, boolean endOfCycles) {
         int totalCost = 0;
         for (Meal meal : buffet.meals()) {
-            if (expirationDate(meal).isAfter(date)) {
-                totalCost += meal.mealType().getCost();
-                buffet.meals().remove(meal);
+            if (meal.mealType().getDurability() == MealDurability.SHORT) {
+                if (date.isAfter(meal.creationTime().plusMinutes(90))) {
+                    totalCost += meal.mealType().getCost();
+                    buffet.meals().remove(meal);
+                }
+            }
+            if (endOfCycles) {
+                if (meal.mealType().getDurability() != MealDurability.LONG) {
+                    totalCost += meal.mealType().getCost();
+                    buffet.meals().remove(meal);
+                }
             }
         }
         return totalCost;
     }
 
-    private int expirationDays(MealDurability mealDurability) {
-        return switch (mealDurability) {
-            case SHORT -> 1;
-            case MEDIUM -> 2;
-            case LONG -> 3;
-        };
-    }
 
-    private LocalDate expirationDate(Meal meal) {
-        return meal.creationTime().plusDays(expirationDays(meal.mealType().getDurability()));
-    }
 }
