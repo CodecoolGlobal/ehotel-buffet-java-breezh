@@ -10,11 +10,16 @@ public class GuestGroupBuilderImpl implements GuestGroupBuilder{
 
     public ArrayList<HashSet<Guest>> generateGroups(Set<Guest> guestSet) {
         ArrayList<HashSet<Guest>> guests = new ArrayList<>();
+
+        for (int i = 0; i < 8; i++) {
+            guests.add(new HashSet<>());
+        }
+
         Random random = new Random();
 
         for (Guest guest : guestSet) {
             int randomGroupNumber = random.nextInt(8);
-            guests.get(randomGroupNumber - 1).add(guest);
+            guests.get(randomGroupNumber).add(guest);
         }
         return guests;
     }

@@ -7,12 +7,12 @@ import java.util.stream.Collectors;
 
 public record Buffet (List<Meal> meals) {
 
-    public List<Meal> mostFresh(List<Meal> meals, MealType mealType) {
-        return meals.stream().filter(meal -> meal.mealType() == mealType).sorted(Comparator.comparing(Meal::creationTime).reversed()).toList();
+    public void mostFresh(List<Meal> meals, MealType mealType) {
+         meals.stream().filter(meal -> meal.mealType() == mealType).sorted(Comparator.comparing(Meal::creationTime).reversed()).toList();
     }
 
-    public List<Meal> leastFresh(List<Meal> meals, MealType mealType) {
-        return meals.stream().filter(meal -> meal.mealType() == mealType).sorted(Comparator.comparing(Meal::creationTime)).toList();
+    public void leastFresh(List<Meal> meals, MealType mealType) {
+         meals.stream().filter(meal -> meal.mealType() == mealType).sorted(Comparator.comparing(Meal::creationTime)).toList();
     }
 
 }

@@ -66,7 +66,7 @@ public class BreakfastManager {
             buffetService.refill((new Meal(MealType.CEREAL, initialTime)), 5, buffet);
             buffetService.refill((new Meal(MealType.MILK, initialTime)), 5, buffet);
 
-            for (Guest guest : guestCycles.get(0)) {
+            for (Guest guest : guestCycles.get(i)) {
                 MealType favoredMeal = guest.guestType().getMealPreferences().get(random.nextInt(guest.guestType().getMealPreferences().size()));
                 if (!buffetService.consumeFreshest(buffet, favoredMeal)) {
                     unsatisfiedGuest++;

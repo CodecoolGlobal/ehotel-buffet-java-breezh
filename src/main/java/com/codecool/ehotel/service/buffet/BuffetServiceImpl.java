@@ -7,6 +7,7 @@ import com.codecool.ehotel.model.MealType;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Iterator;
 import java.util.List;
 
 public class BuffetServiceImpl implements BuffetService {
@@ -38,18 +39,15 @@ public class BuffetServiceImpl implements BuffetService {
     @Override
     public int collectWaste(Buffet buffet, LocalDateTime date, boolean endOfCycles) {
         int totalCost = 0;
-        for (Meal meal : buffet.meals()) {
-            if (meal.mealType().getDurability() == MealDurability.SHORT) {
-                if (date.isAfter(meal.creationTime().plusMinutes(90))) {
-                    totalCost += meal.mealType().getCost();
-                    buffet.meals().remove(meal);
-                }
-            }
-            if (endOfCycles) {
-                if (meal.mealType().getDurability() != MealDurability.LONG) {
-                    totalCost += meal.mealType().getCost();
-                    buffet.meals().remove(meal);
-                }
+        Iterator<Meal> mealIterator = buffet.meals().iterator();
+        while (mealIterator.hasNext()) {
+            Meal meal = mealIterator.next();
+            if (meal.mealType().getDurability() == MealDurability.SHORT && date.isAfter(meal.creationTime().plusMinutes(90))) {
+                totalCost += meal.mealType().getCost();
+                mealIterator.remove();
+            } else if (endOfCycles && meal.mealType().getDurability() != MealDurability.LONG) {
+                totalCost += meal.mealType().getCost();
+                mealIterator.remove();
             }
         }
         return totalCost;
