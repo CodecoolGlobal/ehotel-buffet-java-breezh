@@ -14,5 +14,6 @@ public interface BuffetService {
     public boolean consumeFreshest(Buffet buffet, MealType mealType);
 
     public int collectWaste(Buffet buffet, LocalDateTime date, boolean endOfCycles);
+    public int amountToMake (Buffet buffet, MealType mealType);
 
 }

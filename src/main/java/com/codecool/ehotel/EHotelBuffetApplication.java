@@ -13,12 +13,6 @@ import java.util.List;
 
 public class EHotelBuffetApplication {
 
-    BuffetService buffetService;
-    GuestService guestService;
-    GuestGenerator guestGenerator;
-    GuestGroupBuilder guestGroupBuilder;
-    Buffet buffet;
-
     public static void main(String[] args) {
         List<Meal> meals = new ArrayList<>();
         Buffet buffet = new Buffet(meals);

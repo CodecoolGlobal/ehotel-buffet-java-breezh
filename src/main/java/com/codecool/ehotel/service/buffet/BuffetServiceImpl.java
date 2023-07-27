@@ -4,11 +4,8 @@ import com.codecool.ehotel.model.Buffet;
 import com.codecool.ehotel.model.Meal;
 import com.codecool.ehotel.model.MealDurability;
 import com.codecool.ehotel.model.MealType;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Iterator;
-import java.util.List;
 
 public class BuffetServiceImpl implements BuffetService {
     Buffet buffet;
@@ -19,7 +16,7 @@ public class BuffetServiceImpl implements BuffetService {
 
     @Override
     public void refill(Meal meal, int amount, Buffet buffet) {
-        for (int i = 0; i <= amount; i++) {
+        for (int i = 0; i < amount; i++) {
             buffet.meals().add(meal);
         }
     }
@@ -51,6 +48,24 @@ public class BuffetServiceImpl implements BuffetService {
             }
         }
         return totalCost;
+    }
+
+    public int amountToMake (Buffet buffet, MealType mealType) {
+        int amountOStock = 0;
+        int amountToMake;
+        int amountMax = 0;
+        switch (mealType.getDurability()) {
+            case SHORT -> amountMax = 10;
+            case MEDIUM -> amountMax = 15;
+            case LONG -> amountMax = 30;
+        }
+        for(Meal meal : buffet.meals()) {
+            if (meal.mealType().equals(mealType)){
+                amountOStock++;
+            }
+        }
+        amountToMake = Math.max(amountMax - amountOStock, 0);
+        return amountToMake;
     }
 
 
