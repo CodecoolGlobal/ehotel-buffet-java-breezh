@@ -18,8 +18,6 @@ public class EHotelBuffetApplication {
     GuestGenerator guestGenerator;
     GuestGroupBuilder guestGroupBuilder;
     Buffet buffet;
-    int wasteCost = 0;
-    int unsatisfiedGuest = 0;
 
     public static void main(String[] args) {
         List<Meal> meals = new ArrayList<>();

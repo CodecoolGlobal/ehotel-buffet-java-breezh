@@ -39,7 +39,7 @@ public class BreakfastManager {
     public void serve() {
         Random random = new Random();
 
-        Set<Guest> fullGuestList = guestGenerator.generateGuests(guestService, 100, LocalDate.parse("2023-01-01"), LocalDate.parse("2023-02-01"));
+        Set<Guest> fullGuestList = guestGenerator.generateGuests(guestService, 10, LocalDate.parse("2023-01-01"), LocalDate.parse("2023-02-01"));
         Set<Guest> guestsForTheDay = guestService.getGuestsForDay(fullGuestList, LocalDate.parse("2023-01-15"));
         ArrayList<HashSet<Guest>> guestCycles = guestGroupBuilder.generateGroups(guestsForTheDay);
 
@@ -80,13 +80,14 @@ public class BreakfastManager {
             }
 
             initialTime = initialTime.plusMinutes(30);
-            System.out.println("cycle end");
-            System.out.println(wasteCost);
-            System.out.println(unsatisfiedGuest);
+            System.out.println(i + 1 +". cycle  " + initialTime.minusMinutes(30) + " " + initialTime);
+            System.out.println("Waste cost: " + wasteCost);
+            System.out.println("Unsatisfied guests: " +unsatisfiedGuest);
+            System.out.println("-------------------");
         }
-        System.out.println("----");
-        System.out.println(wasteCost);
-        System.out.println(unsatisfiedGuest);
+        System.out.println("-------------------------SUMMARY-------------------------");
+        System.out.println("Waste cost: " + wasteCost);
+        System.out.println("Unsatisfied guests: " +unsatisfiedGuest);
         System.out.println("breakfast end");
     }
 }
