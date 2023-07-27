@@ -5,6 +5,7 @@ import com.codecool.ehotel.model.Meal;
 import com.codecool.ehotel.model.MealType;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface BuffetService {
@@ -12,6 +13,6 @@ public interface BuffetService {
 
     public boolean consumeFreshest(Buffet buffet, MealType mealType);
 
-    public int collectWaste(Buffet buffet, LocalDate date);
+    public int collectWaste(Buffet buffet, LocalDateTime date, boolean endOfCycles);
 
 }
